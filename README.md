@@ -1,2 +1,2 @@
 # Portfolio
-A brief portfolio of my coding work
+A collection of my coding work at Emory University by course number and name 
