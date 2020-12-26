@@ -1,0 +1,87 @@
+---
+title: "Homework 1"
+author: "Dorrie Hammond"
+date: "9/14/2020"
+output: html_document
+---
+# Honor Pledge
+This code is my own work, it was written without consulting a tutor or code written by other students - Dorrie Hammond
+
+## 0.
+First, I have read the LifetimeBoxOffice.csv file and have put its data into the LBO data.frame.  From the structure command, we can see that LBO has 200 Observations (top 200 movies) and 4 variables (rank, movie, lifetime gross, and year).
+
+
+```{r}
+LBO <- read.csv("LifetimeBoxOffice.csv") # reads csv
+str(LBO) # prints structure of LBO
+```
+
+## 1.
+
+This prints the first ten movies from the LBO data.frame.  These movies are already ranked, so the first ten movies are also the top ten ranked movies (aka no additional ordering is needed).
+
+
+```{r}
+LBO[1:10,2:3] # prints ten top movies
+```
+
+## 2.
+
+Here, I have printed a subset from LBO that only contains movies that have earned over a total of a billion dollars of lifetime gross.
+
+
+```{r}
+subset(LBO,subset = LifetimeGross > 1000000000) # prints subset of movies earning more than a billion
+```
+
+
+## 3.
+
+Here, I have created a new variable, movies_2019, that only contains movies from LBO that were released in 2019.  After printing movies_2019, you can see that there are 13 movies in this subset.
+
+
+```{r}
+movies_2019 <- subset(LBO,subset = Year == 2019) # creates subset of 2019 top movies
+movies_2019 # prints subset
+```
+
+
+## 4.
+
+This shows the mean and standard deviation of lifetime gross from the 2019 movies subset.  The mean is 1,183,262,439 dollars and the standard deviation is 558,485,335 dollars.
+
+
+```{r}
+mean(movies_2019$LifetimeGross) # prints average of lifetime gross
+sd(movies_2019$LifetimeGross) # prints standard deviation of lifetime gross
+```
+
+
+## 5.
+
+This generates a boxplot of the lifetime gross movies make sorted by year.  In this case, I am using lifetime gross as a quantitative value and year as a categorical value.  By displaying the data this way, we can show the trends from max, min, and average lifetime gross movies from certain years have been able to make.  Like a user can see that top movies from 2020 on average made more lifetime gross than most of its previous years.  You can also see if certain years have outliers.
+
+
+```{r}
+# LifetimeGross is used as a quant variable and Year is used as a cat variable
+boxplot(LBO$LifetimeGross ~ LBO$Year, main="Lifetime Gross of Top 200 Movies by Year",
+        ylab="Lifetime Gross ($)",xlab="Year")
+```
+
+
+
+## 6.
+
+First I used the factor command on the y vector, and then defined the levels of y's factors as Freshman, Sophomore, Junior, and Senior.  Then I used the factor command again to specify that the factors are ordered, thus making Freshman < Sophomore < Junior < Senior true.  This can all be seen as y is printed.  And to show that these factors now have hierarchy, I have compared Freshman < Sophomore (TRUE), Sophomore < Junior (TRUE), and Junior < Senior (TRUE)
+
+```{r}
+y <- c(1,2,1,3,4,1,1,4,2,1,3,4,3,2,1,3,4,1,2,3,1,1,2)
+y <- factor(y)
+levels(y) <- c("Freshman","Sophomore","Junior","Senior")
+y <- factor(y,ordered=TRUE,levels=c("Freshman","Sophomore","Junior","Senior"))
+y # print new factor vector with level hierarchy
+y[1] < y[2] # Freshman < Sophomore TRUE
+y[2] < y[4] # Sophomore < Junior TRUE
+y[4] < y[5] # Junior < Senior TRUE
+```
+
