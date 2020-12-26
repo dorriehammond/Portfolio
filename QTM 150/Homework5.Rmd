@@ -1,0 +1,67 @@
+---
+title: "Homework 5"
+author: '2284917'
+date: "10/18/2020"
+output: html_document
+---
+
+# Honor Pledge
+This code is my own work, it was written without consulting a tutor or code written by other students - Dorrie Hammond
+
+## 0.
+
+```{r}
+library(ggplot2) # load ggplot2 package first
+gss2k <- read.csv("gss2k.csv", stringsAsFactors = TRUE) #import data set
+```
+
+## 1.
+
+```{r}
+table(gss2k$degree)
+table(gss2k$sex,gss2k$degree)
+```
+
+## 2.
+
+The first includes NAs, the second excludes NAs.  The rest of the plots will exclude NAs.
+
+```{r}
+ggplot(gss2k, aes(degree))+
+  geom_bar() +
+  labs(x="Level of Education", y="Total Participants", title="Frequency of Degrees by Sex")
+
+ggplot(subset(gss2k,!is.na(degree)), aes(degree))+
+  geom_bar() +
+  labs(x="Level of Education", y="Total Participants", title="Frequency of Degrees by Sex")
+```
+
+
+## 3.
+
+```{r}
+ggplot(subset(gss2k,!is.na(degree)), aes(degree))+
+  geom_bar(aes(fill=sex)) +
+  labs(x="Level of Education", y="Total Participants", title="Frequency of Degrees by Sex")
+```
+
+## 4.
+
+```{r}
+ggplot(subset(gss2k,!is.na(degree)),aes(degree)) +
+  geom_bar(aes(fill=sex),position = position_dodge()) +
+  labs(x="Level of Education", y="Total Participants", title="Frequency of Degrees by Sex")
+```
+
+## 5.
+
+The following plot shows a boxplot of participant health by age split between sex.  The goal of this plot is to find the impact age and sex has on participants' current health.  As shown below, it tends to be that the lower the age the better the health, and the higher the age the worse health.  Both sexes show to have similar 'shapes' when it comes to age, but Female participants are generally healthier at slightly higher ages.  I filtered out the NA's and DK's.
+
+```{r}
+ggplot(subset(gss2k,!is.na(health)&health!="DK"),aes(x=health,y=age))+
+  geom_boxplot() +
+  facet_grid(~sex) +
+  labs(x="Health of Participants", y="Age of Participants", title="Comparison of Health between Age and Sex")
+```
+
+
